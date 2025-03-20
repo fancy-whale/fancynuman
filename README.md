@@ -12,7 +12,7 @@ You can install NuMan using the following command: (using nushell)
 
 ```shell
 git clone https://github.com/fancy-whale/fancynuman.git ($nu.default-config-dir | path join "modules/fancynuman")
-echo "\nuse fancynuman/fancynuman.nu *" | save --append $nu.config-path
+echo "\nuse fancynuman *" | save --append $nu.config-path
 ```
 
 ## Usage
@@ -26,3 +26,4 @@ numan mod remove <module-name> # removes a module from the NuShell
 numan script add <script-repo> # adds a script to the NuShell
 numan script remove <script-name> # removes a script from the NuShell
 ```
+

@@ -81,15 +81,15 @@ export def "numan mod add" [
         error make {msg: "Module already exists"}
     }
     git clone $url $module_path
-    if not ($module_path | path join $"($module_name).nu" | path exists) {
+    if not ($module_path | path join "mod.nu" | path exists) {
         rm -rf $module_path
-        error make {msg: "Module does not contain a .nu file with the same name as the module repository"}
+        error make {msg: "Module does not contain a mod.nu file"}
     }
     let mod_lines = (get_mod_lines)
     let start = $mod_lines | get start | first | into int
     let end = $mod_lines | get end | first | into int
     let config_file = (get_config_file)
-    let new_line = $"use ($module_name)/($module_name).nu *"
+    let new_line = $"use ($module_name) *"
     $config_file | insert ($start + 1) $new_line | save -f $nu.config-path
     print $"Module ($module_name) added successfully"
 }
@@ -110,7 +110,7 @@ export def "numan mod remove" [
     let start = $mod_lines | get start | first | into int
     let end = $mod_lines | get end | first | into int
     let config_file = (get_config_file)
-    let line_to_remove = $"use ($module_name)/($module_name).nu *"
+    let line_to_remove = $"use ($module_name) *"
     let fancynuget_lines = ($config_file | range $start..$end)
     let line_index = ($fancynuget_lines | enumerate | where item == $line_to_remove | get index | first | into int)
     let line_to_remove_index = ($start + $line_index)
